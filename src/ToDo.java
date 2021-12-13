@@ -35,9 +35,7 @@ public class ToDo implements Handable, Printable {
 
     public void authentication(User user) {
         if (user.readUser().isEmpty() || !user.isAuthorized()) {
-            System.out.println("--xx Command Line Todo application xx--");
-            System.out.println("=======================================");
-            System.out.println();
+            printUsage();
             System.out.println("--User authentication--");
             System.out.println();
             user.handleUser();
