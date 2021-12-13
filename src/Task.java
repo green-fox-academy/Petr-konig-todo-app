@@ -25,7 +25,10 @@ public class Task {
     }
 
     public void printList(String args, User user) {
-        List<String> tempIsDone = readFile(user);
+        List<String> tempIsDone = new ArrayList<>();
+        for (String taskState: taskList) {
+            tempIsDone.add(taskState.split(",")[1]);
+        }
         if (taskList.isEmpty()) {
             System.out.println("There is no todos for today! :-)");
         } else {
@@ -33,7 +36,7 @@ public class Task {
                 case "-l":
                     System.out.println("List of all tasks");
                     for (int i = 0; i < taskList.size(); i++) {
-                        if (tempIsDone.get(i).split(",")[1].equals("finished")) {
+                        if (taskList.get(i).split(",")[1].equals("finished")) {
                             System.out.println(i + 1 + " [X]" + " - " + taskList.get(i).split(",")[0]);
                         } else {
                             System.out.println(i + 1 + " [ ]" + " - " + taskList.get(i).split(",")[0]);
@@ -41,21 +44,31 @@ public class Task {
                     }
                     break;
                 case "-lu":
-                    System.out.println("Pending tasks: ");
-                    for (int i = 0; i < taskList.size(); i++) {
-                        if (tempIsDone.get(i).split(",")[1].equals("unfinished")) {
-                            System.out.println(i + 1 + " - " + taskList.get(i).split(",")[0]);
+                    if (!tempIsDone.contains("unfinished")) {
+                        System.out.println("All tasks have been finished");
+                    } else {
+                        System.out.println("Pending tasks: ");
+                        for (int i = 0; i < taskList.size(); i++) {
+                            if (taskList.get(i).split(",")[1].equals("unfinished")) {
+                                System.out.println(i + 1 + " - " + taskList.get(i).split(",")[0]);
+                            }
                         }
                     }
                     break;
+
                 case "-ld":
-                    System.out.println("Finished tasks: ");
-                    for (int i = 0; i < taskList.size(); i++) {
-                        if (tempIsDone.get(i).split(",")[1].equals("finished")) {
-                            System.out.println(i + 1 + " - " + taskList.get(i).split(",")[0]);
+                    if (!tempIsDone.contains("finished")) {
+                        System.out.println("Any task haven't been finished yet");
+                    } else {
+                        System.out.println("Finished tasks: ");
+                        for (int i = 0; i < taskList.size(); i++) {
+                            if (taskList.get(i).split(",")[1].equals("finished")) {
+                                System.out.println(i + 1 + " - " + taskList.get(i).split(",")[0]);
+                            }
                         }
                     }
                     break;
+
             }
         }
     }
